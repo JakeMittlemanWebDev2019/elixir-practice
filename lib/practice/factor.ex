@@ -24,6 +24,7 @@ defmodule Practice.Factor do
           factor(x/2)
         end
       end
-    list    
+    list
+    |> Enum.join(", ")    
   end
 end
