@@ -26,7 +26,7 @@ defmodule Practice do
     String.split(x)
     |> inspect()
     |> String.reverse()
-    |> === x    
+    |> Kernel.===(x)    
   end  
 
 
