@@ -1,9 +1,9 @@
 <div class="row">
   <div class="column">
     <p><%= link "← go back", to: "/" %></p>
-    <h2>Arithmetic Results</h2>
+    <h2>The Palindromic Truth:</h2>
 
-    <p><%= @x %> = <%= @y %></p>
+    <p><%= @y %>!</p>
   </div>
 </div>
 
