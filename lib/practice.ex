@@ -23,10 +23,7 @@ defmodule Practice do
 
   # TODO: Add a palindrome? function.
   def palindrome?(x) do
-    String.split(x)
-    |> inspect()
-    |> String.reverse()
-    |> Kernel.===(x)    
+    Practice.Palindrome.palindrome?(x)
   end  
 
 
