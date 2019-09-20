@@ -1,13 +1,16 @@
 defmodule Practice.Factor do
 
-  list = [1]
+  def factor(x) do
+    factor_helper(x, [1])
+  end
 
   def isPrime(y) do
     divisors = []
     Enum.each(2..y, fn i ->
-      case rem(y, i) === 0 do
-        divisors ++ i
+      if rem(y, i) === 0 do
+        divisors ++ [i]
       end
+    end)
 
     if length(divisors) === 1 do
       true
@@ -16,15 +19,20 @@ defmodule Practice.Factor do
     end
   end
 
-  def factor(x) do
+  def factor_helper(1, acc) do
+    acc
+  end
+
+  def factor_helper(x, acc) do
+    x = Integer.parse(x)
     Enum.each(2..x, fn f -> 
-      case isPrime(f) === true do
-        case rem(x, i) === 0:
-          list ++ [i]
-          factor(x/2)
+      if isPrime(f) === true do
+        if rem(x, f) === 0 do
+            acc = acc ++ [f]
+            factor_helper(x/f, acc)
         end
       end
-    list
-    |> Enum.join(", ")    
+    end)
+  5
   end
 end

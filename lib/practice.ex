@@ -18,8 +18,7 @@ defmodule Practice do
 
   def factor(x) do
     # Maybe delegate this too.
-    [1,2,x]
-    |> Enum.join(", ")
+    Practice.Factor.factor(x)
   end
 
   # TODO: Add a palindrome? function.
