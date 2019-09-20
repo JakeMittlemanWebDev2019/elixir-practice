@@ -18,11 +18,11 @@ defmodule Practice.Factor do
     end
   end
 
-  def factor_helper(x, acc) do
-    x = Integer.parse(x)
-    Enum.reduce(2..x, [], fn f -> (
-      if isPrime(f) === true do
-        acc ++ [f]
+  def factor_helper(num, acc) do
+    Enum.reduce(2..num, [], fn(x, acc) -> (
+      if (isPrime(x) === true) do
+        acc ++ [x]
+      else acc
       end)
     end)
   end
