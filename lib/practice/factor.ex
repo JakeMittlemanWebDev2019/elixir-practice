@@ -14,8 +14,12 @@ defmodule Practice.Factor do
   end
 
   def factor(numString) do
-    {num, _} = Integer.parse(numString)
-    factor_h(num)
+    try do
+      {num, _} = Integer.parse(numString)
+      factor_h(num)
+    rescue
+      e in FunctionClauseError -> factor_h(numString)
+    end
   end
 
   def factor_h(1) do [] end
