@@ -58,8 +58,8 @@ defmodule Practice.Calc do
         operand2 = hd tl operands
 
         newVal = evaluateExpression(operand1, op, operand2)
-        tail = tl operands
-        {[newVal] ++ tail, operators}
+        tail = tl tl operands
+        handleOperator(tok, [newVal] ++ tail, tl operators)
 
       # if it's a higher precedence, push to the operators stack
       else
@@ -88,7 +88,7 @@ defmodule Practice.Calc do
       operator = hd operators
       operand1 = hd operands
       operand2 = hd tl operands
-      val = evaluateExpression(operand2, operator, operand1)
+      val = evaluateExpression(operand1, operator, operand2)
       operandRest = tl tl operands
       operatorRest = tl operators
 
