@@ -1,12 +1,7 @@
 defmodule Practice.Factor do
-
-  def factor(x) do
-    factor_helper(x, [])
-  end
-
   def isPrime(y) do
     divisors = Enum.reduce(2..y, [], fn(x, acc) -> (
-                    if (rem(y,x)===0) do x ++ acc
+                    if (rem(y,x)===0) do [x] ++ acc
                     else acc
                     end)
                 end)
@@ -18,10 +13,13 @@ defmodule Practice.Factor do
     end
   end
 
-  def factor_helper(num, acc) do
+  def factor(num) do
     Enum.reduce(2..num, [], fn(x, acc) -> (
       if (isPrime(x) === true) do
-        acc ++ [x]
+        if (rem(num,x)===0) do
+          acc ++ [x]
+        else acc
+        end
       else acc
       end)
     end)
