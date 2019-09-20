@@ -3,6 +3,6 @@
     <p><%= link "← go back", to: "/" %></p>
     <h2>Here Are Your Factors:</h2>
 
-    <p><%= @x %>: <%= inspect.@y %>!</p>
+    <p><%= @x %>: <%= inspect @y %>!</p>
   </div>
 </div>

@@ -18,7 +18,7 @@ defmodule Practice.Factor do
     factor_h(num)
   end
 
-  def factor(1) do [] end
+  def factor_h(1) do [] end
 
   def factor_h(num) do
     divisors = Enum.reduce(2..num, [], fn(x, acc) -> (
