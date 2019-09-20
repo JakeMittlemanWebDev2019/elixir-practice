@@ -20,7 +20,7 @@ defmodule Practice.Factor do
 
   def factor_helper(x, acc) do
     x = Integer.parse(x)
-    Enum.reduce(2..x, [] fn f -> (
+    Enum.reduce(2..x, [], fn f -> (
       if isPrime(f) === true do
         acc ++ [f]
       end)
