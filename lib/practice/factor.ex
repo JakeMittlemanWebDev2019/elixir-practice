@@ -13,13 +13,18 @@ defmodule Practice.Factor do
     end
   end
 
+  def factor(numString) do
+    {num, _} = Integer.parse(numString)
+    num
+  end
+
   def factor(1) do [] end
 
-  def factor(num) do
+  def factor_h(num) do
     divisors = Enum.reduce(2..num, [], fn(x, acc) -> (
       if (isPrime(x) === true) do
         if (rem(num,x)===0) do
-          factor(Kernel.trunc(num/x)) ++ [x]
+          factor_h(Kernel.trunc(num/x)) ++ [x]
         else acc
         end
       else acc
