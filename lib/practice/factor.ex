@@ -15,7 +15,7 @@ defmodule Practice.Factor do
 
   def factor(numString) do
     {num, _} = Integer.parse(numString)
-    num
+    factor_h(num)
   end
 
   def factor(1) do [] end
