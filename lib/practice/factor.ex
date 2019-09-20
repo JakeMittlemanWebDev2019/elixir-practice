@@ -13,17 +13,31 @@ defmodule Practice.Factor do
     end
   end
 
+  def factor(1) do [] end
+
   def factor(num) do
-    Enum.reduce(2..num, [], fn(x, acc) -> (
+    divisors = Enum.reduce(2..num, [], fn(x, acc) -> (
       if (isPrime(x) === true) do
         if (rem(num,x)===0) do
-          acc ++ [x]
+          factor(Kernel.trunc(num/x)) ++ [x]
         else acc
         end
       else acc
       end)
     end)
   end
+
+  # def factor(num) do
+  #   Enum.reduce(2..num, [], fn(x, acc) -> (
+  #     if (isPrime(x) === true) do
+  #       if (rem(num,x)===0) do
+  #         acc ++ [x]
+  #       else acc
+  #       end
+  #     else acc
+  #     end)
+  #   end)
+  # end
 
   # ==================================
   # OLD VERSION
