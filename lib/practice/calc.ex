@@ -36,7 +36,7 @@ defmodule Practice.Calc do
   def lowerPrecedence(tok, operator) do
 
     # return if the string op is lower precedence than the stack op
-    getPrecedence(tok) < getPrecedence(operator)
+    getPrecedence(tok) <= getPrecedence(operator)
   end
 
   # Handles the case that an operator is seen in
@@ -57,7 +57,7 @@ defmodule Practice.Calc do
         operand1 = hd operands
         operand2 = hd tl operands
 
-        newVal = evaluateExpression(operand1, op, operand2)
+        newVal = evaluateExpression(operand2, op, operand1)
         tail = tl tl operands
         handleOperator(tok, [newVal] ++ tail, tl operators)
 
@@ -88,7 +88,7 @@ defmodule Practice.Calc do
       operator = hd operators
       operand1 = hd operands
       operand2 = hd tl operands
-      val = evaluateExpression(operand1, operator, operand2)
+      val = evaluateExpression(operand2, operator, operand1)
       operandRest = tl tl operands
       operatorRest = tl operators
 
