@@ -33,6 +33,6 @@ defmodule Practice.Factor do
         end
       end
     end)
-  5
+    acc
   end
 end
