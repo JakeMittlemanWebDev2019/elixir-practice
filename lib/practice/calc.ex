@@ -4,12 +4,15 @@ defmodule Practice.Calc do
     num
   end
 
+  # Split the expression into tokens
   def calc(expr) do
     expr
     |> String.split(~r/\s+/)
     |> calc([], [])
   end
 
+  # Given two operands and an operator, evaluate the
+  # expression
   def evaluateExpression(operand1, op, operand2) do
     case op do
       "+" -> operand1 + operand2
@@ -19,71 +22,99 @@ defmodule Practice.Calc do
     end
   end
 
-  def lowerPrecedence(tok, operator) do
-    tok_val = 0
-    op_val = 0
-    case tok do
-      "+" -> tok_val = 1
-      "-" -> tok_val = 1
-      "*" -> tok_val = 2
-      "/" -> tok_val = 2
+  def getPrecedence(operator) do
+    case operator do
+      "+" -> 1
+      "-" -> 1
+      "*" -> 2
+      "/" -> 2
     end
-
-    case operator do 
-      "+" -> op_val = 1
-      "-" -> op_val = 1
-      "*" -> op_val = 2
-      "/" -> op_val = 2
-    end
-
-    tok_val < op_val
-
   end
 
+  # Decide if the tok (the one from the string)
+  # is lower precedence than the operator (from the stack)
+  def lowerPrecedence(tok, operator) do
+
+    # return if the string op is lower precedence than the stack op
+    getPrecedence(tok) < getPrecedence(operator)
+  end
+
+  # Handles the case that an operator is seen in
+  # the input string
   def handleOperator(tok, operands, operators) do
 
+    # if we don't have any operators, push to the stack
     if (length(operators) === 0) do
-      operators = [tok] ++ operators
-    else 
+      {operands, [tok] ++ operators}
 
+    # otherwise...
+    else
+
+      # if we've found a lower precedence operator
       if (lowerPrecedence(tok, hd operators)) do
+        # evaluate the expression and push to the appropriate stack
         op = hd operators
         operand1 = hd operands
         operand2 = hd tl operands
 
         newVal = evaluateExpression(operand1, op, operand2)
-        operands = newVal ++ tl operands
+        tail = tl operands
+        {[newVal] ++ tail, operators}
+
+      # if it's a higher precedence, push to the operators stack
       else
-        operators = tok ++ operators
+        {operands, [tok] ++ operators}
       end
     end
-
-    {operands, operators}
-
   end
 
+  # check if we've found an operator
+  def isOperator(op) do
+    if (op === "+" || op === "-" || op === "/" || op === "*") do
+      true
+    else
+      false
+    end
+  end
+
+  # When we've scanned the whole input string, continue to
+  # pop operators and evaluate expressions until we've
+  # exhausted all the operators
   def calc(list, operands, operators) when length(list) === 0 do
-    hd operands
+    if (length(operators) === 0) do
+      hd operands
+    else
+      # evaluate the expression
+      operator = hd operators
+      operand1 = hd operands
+      operand2 = hd tl operands
+      val = evaluateExpression(operand2, operator, operand1)
+      operandRest = tl tl operands
+      operatorRest = tl operators
+
+      # call the function again with smaller stacks
+      calc([], [val] ++ operandRest, operatorRest)
+    end
   end
 
+  # the main loop
   def calc(list, operands, operators) do
     tok = hd list
-    case is_float(Float.parse(tok)) do
-      true -> operands = [parse_float(tok)] ++ operands
-      false -> {operands, operators} = handleOperator(tok, operands, operators)
-    
+
+
+    case isOperator(tok) do
+      # if it's not an operator
+      # append to the operands stack
+      false -> (rest = tl list
+              calc(rest, [parse_float(tok)] ++ operands, operators))
+
+      # if it IS an operator,
+      # handle the operator by calling the handleOperator function
+      # and then recurse with the new stack
+      true -> ({operands, operators} = handleOperator(tok, operands, operators)
+                rest = tl list
+                calc(rest, operands, operators))
+
     end
-
-    list = tl list
-    
-    calc(list, operands, operators)
-
-    # Hint:
-    # expr
-    # |> split
-    # |> tag_tokens  (e.g. [+, 1] => [{:op, "+"}, {:num, 1.0}]
-    # |> convert to postfix
-    # |> reverse to prefix
-    # |> evaluate as a stack calculator using pattern matching
   end
 end
